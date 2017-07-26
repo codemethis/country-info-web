@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
-import { Country } from "../../classes/country";
-import { CountryService } from "../../services/country.service";
+import { Country } from '../../classes/country';
+import { CountryService } from '../../services/country.service';
 
 @Component({
 	selector: 'countryinfo-search-result',
@@ -10,11 +10,11 @@ import { CountryService } from "../../services/country.service";
 })
 export class SearchResultComponent {
 	@Input() country: Country;
-	
-	constructor(private router: Router, private countryService: CountryService) {
-		
+
+	constructor(private router: Router, protected countryService: CountryService) {
+
 	}
-	
+
 	go() {
 		this.router.navigate(['/show', this.country.alpha2Code.toLowerCase()]);
 	}

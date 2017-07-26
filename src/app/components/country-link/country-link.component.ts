@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Country } from "../../classes/country";
-import { CountryService } from "../../services/country.service";
+import { Country } from '../../classes/country';
+import { CountryService } from '../../services/country.service';
 
 @Component({
 	selector: 'countryinfo-country-link',
@@ -9,12 +9,12 @@ import { CountryService } from "../../services/country.service";
 })
 export class CountryLinkComponent implements OnInit {
 	@Input() countryId: string;
-	private country: Country;
-	
-	constructor(private countryService: CountryService) {
-		
+	protected country: Country;
+
+	constructor(protected countryService: CountryService) {
+
 	}
-	
+
 	ngOnInit() {
 		this.countryService.getCountryByAlphaCode(this.countryId)
 			.subscribe(c => this.country = c);

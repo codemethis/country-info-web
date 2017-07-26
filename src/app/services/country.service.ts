@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from "@angular/http";
+import { Http, Response } from '@angular/http';
 
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 
-import { Country } from "../classes/country";
+import { Country } from '../classes/country';
 
 @Injectable()
 export class CountryService {
 	private apiUrl = 'https://restcountries.eu/rest/v1/';
-	
+
 	constructor(private http: Http) {
-		
+
 	}
-	
+
 	getCountryByAlphaCode(code: string): Observable<Country> {
 		if (code === undefined) {
 			console.log('Search called with undefined search string');
@@ -48,12 +48,12 @@ export class CountryService {
 	}
 
 	private getSingleCountry(res: Response) {
-		let body = res.json();
+		const body = res.json();
 		return body;
 	}
 
 	private getCountryArray(res: Response) {
-		let body = res.json();
+		const body = res.json();
 		return body || [];
 	}
 
