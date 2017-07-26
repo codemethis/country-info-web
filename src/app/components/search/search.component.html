@@ -1,0 +1,13 @@
+<div class="container container-fluid" style="padding-top:1.5em;">
+	<div class="row">
+		<div class="col-xs-6 text-right">
+			Search for a country
+		</div>
+		<div class="col-xs-6">
+			<input type="text" style="width:95%;" #searchBox (keyup)="runSearch(searchBox.value)" />
+		</div>
+	</div>
+	<div class="row" style="margin-top:2em;">
+		<countryinfo-search-result *ngFor="let r of results; trackBy: trackByAlpha2Code" [country]="r"></countryinfo-search-result>
+	</div>
+</div>
