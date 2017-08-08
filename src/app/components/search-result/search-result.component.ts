@@ -16,6 +16,6 @@ export class SearchResultComponent {
 	}
 
 	go() {
-		this.router.navigate(['/show', this.country.alpha2Code.toLowerCase()]);
+		this.router.navigate(['show', this.country.alpha2Code.toLowerCase()]);
 	}
 }

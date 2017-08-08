@@ -11,7 +11,7 @@ import { CountryLinkComponent } from './components/country-link/country-link.com
 import { CountryInfoComponent } from './components/country-info/country-info.component';
 
 const appRoutes: Routes = [
-	{ path: '', component: SearchComponent },
+	{ path: '', component: SearchComponent, pathMatch: 'full' },
 	{ path: 'show/:countryId', component: CountryInfoComponent }
 ];
 
@@ -26,7 +26,7 @@ const appRoutes: Routes = [
 	imports: [
 		BrowserModule,
 		HttpModule,
-		RouterModule.forRoot(appRoutes)
+		RouterModule.forRoot(appRoutes, {useHash: true})
 	],
 	providers: [CountryService],
 	bootstrap: [AppComponent]
