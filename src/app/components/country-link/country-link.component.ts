@@ -9,14 +9,30 @@ import { CountryService } from '../../services/country.service';
 })
 export class CountryLinkComponent implements OnInit {
 	@Input() countryId: string;
-	protected country: Country;
+	private country: Country;
 
-	constructor(protected countryService: CountryService) {
+	constructor(private countryService: CountryService) {
 
 	}
 
 	ngOnInit() {
 		this.countryService.getCountryByAlphaCode(this.countryId)
 			.subscribe(c => this.country = c);
+	}
+
+	hasCountry(): boolean {
+		return !(this.country == null);
+	}
+
+	getCountryName(): string {
+		return this.country.name;
+	}
+
+	getAlpha2Code() {
+		return this.country.alpha2Code;
+	}
+
+	getFlagPath() {
+		return this.countryService.getFlagPath(this.country);
 	}
 }

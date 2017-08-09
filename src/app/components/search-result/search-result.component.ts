@@ -11,11 +11,15 @@ import { CountryService } from '../../services/country.service';
 export class SearchResultComponent {
 	@Input() country: Country;
 
-	constructor(private router: Router, protected countryService: CountryService) {
+	constructor(private router: Router, private countryService: CountryService) {
 
 	}
 
 	go() {
 		this.router.navigate(['show', this.country.alpha2Code.toLowerCase()]);
+	}
+
+	getFlagPath(c: Country) {
+		return this.countryService.getFlagPath(c);
 	}
 }
