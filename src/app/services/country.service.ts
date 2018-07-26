@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable, empty, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { Country } from '../classes/country';
 
@@ -9,69 +10,59 @@ import { Country } from '../classes/country';
 export class CountryService {
 	private apiUrl = 'https://restcountries.eu/rest/v1/';
 
-	constructor(private http: Http) {
+	constructor(private http: HttpClient) {
 
 	}
 
 	getCountryByAlphaCode(code: string): Observable<Country> {
 		if (code === undefined) {
 			console.log('Search called with undefined search string');
-			return Observable.empty();
+			return empty();
 		}
 
 		if (code.length === 0) {
-			return Observable.empty();
+			return empty();
 		}
 
-		return this.http.get(`${this.apiUrl}alpha/${code}`)
-			.map(this.getSingleCountry)
-			.catch(this.getNullObs);
+		return this.http.get<Country>(`${this.apiUrl}alpha/${code}`)
+			.pipe(
+				catchError(this.getNullObs)
+			);
 	}
 
 	getCountriesByName(input: string): Observable<Country[]> {
 		if (input === undefined) {
 			console.log('Search called with undefined search string');
-			return Observable.of([]);
+			return of([]);
 		}
 
-		if( input.length === 0) {
-			return Observable.of([]);
+		if (input.length === 0) {
+			return of([]);
 		}
 
-		return this.http.get(`${this.apiUrl}name/${input}`)
-			.map(this.getCountryArray)
-			.catch(this.handleError);
+		return this.http.get<Country[]>(`${this.apiUrl}name/${input}`)
+			.pipe(
+				catchError(this.handleError)
+			);
 	}
 
 	getFlagPath(country: Country) {
 		return `assets/Flags/${country.alpha2Code.toLowerCase()}.png`;
 	}
 
-	private getSingleCountry(res: Response) {
-		const body = res.json();
-		return body;
-	}
-
-	private getCountryArray(res: Response) {
-		const body = res.json();
-		return body || [];
-	}
-
-	private handleError(error: Response | any) {
+	private handleError(error: any): Observable<Country[]> {
 		let errMsg: string;
-		if (error instanceof Response) {
-			const body = error.json() || '';
-			const err = body.error || JSON.stringify(body);
+		if (error instanceof HttpErrorResponse) {
 			errMsg = `${error.status} - ${error.statusText || ''}`;
 		} else {
 			errMsg = error.message ? error.messge : error.toString();
 		}
 
 		console.error(errMsg);
-		return Observable.of([]);
+		return of([]);
 	}
 
-	private getNullObs(error: Response | any) {
-		return Observable.of(null);
+	private getNullObs(error: Response | any): Observable<Country> {
+		return of(null);
 	}
 }

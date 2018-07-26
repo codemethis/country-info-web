@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { Country } from '../../classes/country';
 import { CountryService } from '../../services/country.service';
@@ -18,10 +18,11 @@ export class SearchComponent {
 	private searchStream = new Subject<string>();
 
 	constructor(private countryService: CountryService) {
-		this.searchStream.debounceTime(500)
-			.distinctUntilChanged()
-			.switchMap((s: string) => this.countryService.getCountriesByName(s))
-			.subscribe(o => this.results = o);
+		this.searchStream.pipe(
+			debounceTime(500),
+			distinctUntilChanged(),
+			switchMap((s: string) => this.countryService.getCountriesByName(s))
+		).subscribe(o => this.results = o);
 	}
 
 	runSearch(input: string) {

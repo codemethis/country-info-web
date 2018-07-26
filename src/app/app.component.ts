@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from "@angular/router";
-
-import './global-imports/rxjs-operators';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'countryinfo-root',

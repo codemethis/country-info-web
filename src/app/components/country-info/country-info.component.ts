@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { map, switchMap } from 'rxjs/operators';
 
 import { Country } from '../../classes/country';
 import { CountryService } from '../../services/country.service';
@@ -27,9 +28,10 @@ export class CountryInfoComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.route.params.map(p => p['countryId'])
-			.switchMap(id => this.countryService.getCountryByAlphaCode(id))
-			.subscribe(c => this.country = c);
+		this.route.params.pipe(
+			map(p => p['countryId']),
+			switchMap(id => this.countryService.getCountryByAlphaCode(id))
+		).subscribe(c => this.country = c);
 	}
 
 	getUrl(): SafeResourceUrl {
@@ -56,9 +58,9 @@ export class CountryInfoComponent implements OnInit {
 		this.showMap = !this.showMap;
 	}
 
-	private handleError(error: any): Promise<any> {
-		console.error('An error occured', error);
-		return Promise.reject(error.message || error);
-	}
+	// private handleError(error: any): Promise<any> {
+	// 	console.error('An error occured', error);
+	// 	return Promise.reject(error.message || error);
+	// }
 
 }
