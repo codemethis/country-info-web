@@ -20,7 +20,7 @@ export class CountryInfoComponent implements OnInit {
 
 	constructor(
 		private sanitizer: DomSanitizer,
-		private countryService: CountryService,
+		public countryService: CountryService,
 		private router: Router,
 		private route: ActivatedRoute
 	) {
@@ -36,7 +36,7 @@ export class CountryInfoComponent implements OnInit {
 
 	getUrl(): SafeResourceUrl {
 		return this.sanitizer.bypassSecurityTrustResourceUrl(
-			`http://wikimapia.org/#lang=en&lat=${this.country.latlng[0]}&lon=${this.country.latlng[1]}&z=4&m=h`
+			`https://wikimapia.org/#lang=en&lat=${this.country.latlng[0]}&lon=${this.country.latlng[1]}&z=4&m=h`
 		);
 	}
 
