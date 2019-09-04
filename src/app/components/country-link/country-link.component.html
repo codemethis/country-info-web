@@ -1,6 +1,6 @@
 <span *ngIf="hasCountry()">
 	<a [routerLink]="['/show', getAlpha2Code() | lowercase]">
 		<img style="width:1.5em;" [src]="getFlagPath()" [alt]="getCountryName()" />
-		{{getCountryName()}}
+		{{ getCountryName() }}
 	</a>
 </span>

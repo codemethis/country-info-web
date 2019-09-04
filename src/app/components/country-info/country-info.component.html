@@ -2,34 +2,34 @@
 	<button style="margin:0.5em;" (click)="returnToSearch()">Return to search page</button>
 </div>
 <div *ngIf="country" style="background-color:#eee; padding:1em;">
-	<h1 class="pull-left">{{country.name}} ({{country.alpha2Code}}, {{country.alpha3Code}})</h1>
+	<h1 class="pull-left">{{ country.name }} ({{ country.alpha2Code }}, {{ country.alpha3Code }})</h1>
 	<img class="pull-right" style="max-width:120px; margin:1em;" [src]="countryService.getFlagPath(country)" [alt]="country.name" />
 	<table class="table">
 		<tr>
 			<th>Native name:</th>
-			<td>{{country.nativeName}}</td>
+			<td>{{ country.nativeName }}</td>
 		</tr>
 		<tr>
 			<th>Translations</th>
 			<td>
 				<table class="table table-striped">
 					<tr *ngFor="let lang of getFilteredLanguageList()">
-						<th>{{lang.name}}:</th>
-						<td>{{country.translations[lang.code]}}</td>
+						<th>{{ lang.name }}:</th>
+						<td>{{ country.translations[lang.code] }}</td>
 					</tr>
 				</table>
 			</td>
 		</tr>
 		<tr>
 			<th>Region:</th>
-			<td>{{country.region}} ({{country.subregion}})</td>
+			<td>{{ country.region }} ({{ country.subregion }})</td>
 		</tr>
 		<tr>
 			<th>Latitude / Longitude</th>
 			<td>
-				{{country.latlng[0] | number : '1.2-2'}} / {{country.latlng[1] | number : '1.2-2'}}
+				{{ country.latlng[0] | number : '1.2-2' }} / {{ country.latlng[1] | number : '1.2-2' }}
 				<br />
-				<a (click)="toggleMap()">{{showMap ? 'Hide' : 'Show'}} map</a><br />
+				<a (click)="toggleMap()" href="javascript:void(0)">{{ showMap ? 'Hide' : 'Show' }} map</a><br />
 				<iframe *ngIf="showMap"
 						width="450"
 						height="250"
@@ -42,18 +42,18 @@
 		</tr>
 		<tr>
 			<th>Capital:</th>
-			<td>{{country.capital}}</td>
+			<td>{{ country.capital }}</td>
 		</tr>
 		<tr>
 			<th>Population</th>
-			<td>{{country.population | number : '1.0-0'}}</td>
+			<td>{{ country.population | number : '1.0-0' }}</td>
 		</tr>
 		<tr>
 			<th>Languages:</th>
 			<td>
 				<ul>
 					<li *ngFor="let lang of country.languages">
-						{{getLanguageFromCode(lang)}}
+						{{ getLanguageFromCode(lang) }}
 					</li>
 				</ul>
 			</td>
